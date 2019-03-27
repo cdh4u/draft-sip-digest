@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY RFC0822 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY RFC3261 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3261.xml">
+<!ENTITY RFC3311 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3261.xml">
+]>
+<?rfc toc="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="yes" ?>
+<?rfc sortrefs="no" ?>
+<?rfc strict="yes" ?>
+<rfc ipr="trust200902" category="std" docName="draft-holmberg-sipcore-request-digest-latest" obsoletes="" updates="RFC3261" submissionType="IETF" xml:lang="en">
+  <front>
+    <title abbrev="SIP Authorization request-digest">
+      Update of the Session Initiation Protocol (SIP) Authorization header field
+    </title>
+      <author initials="C.H." surname="Holmberg" fullname="Christer Holmberg">
+      <organization>Ericsson</organization>
+      <address>
+        <postal>
+          <street>Hirsalantie 11</street>
+          <code>02420</code>
+          <city>Jorvas</city>
+          <country>Finland</country>
+        </postal>
+        <email>christer.holmberg@ericsson.com</email>
+      </address>
+    </author>
+  
+    <date year="2019"/>
+    <area>Transport</area>
+    <workgroup>SIPCORE Working Group</workgroup>
+    <keyword>SIP</keyword>
+    <keyword>Authorization</keyword>
+    <keyword>request-digest</keyword>
+    <keyword>ABNF</keyword>
+
+    <abstract>
+      <t>
+        This document updates the ABNF for the Session Initiation Protocol (SIP) Authorization
+        header field, by allowing more than 32 hexadecimal characters in the request-digest syntax part.
+      </t>
+      <t>
+        This document fixes an editorial nit in the IANA SIP Parameters registry.
+      </t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Introduction" toc="default">
+      <t>
+        This Session Initiation Protocol (SIP) Authorization header field <xref target="RFC3261"/>
+        is used to convey authentication credentials of a User Agent (UA).
+      </t>
+      <t>
+        The syntax of the Authorization header field contains a request-digest part, that is used
+        to carry a digest value. Currently the request-digest syntax only allows digest values that consist
+        of 32 hexadecimal characters. However, modern crypto algorithms (e.g., SHA-256) produce
+        longer values. Strict SIP parsers might not accept such values.
+      </t>
+      <t>
+        This document updates the request-digest syntax, by allowing more than 32 hexadecimal characters.
+      </t>
+    </section>
+ 
+    <section title="Conventions">
+      <t>
+        The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+        NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+        "MAY", and "OPTIONAL" in this document are to be interpreted as
+        described in BCP 14 <xref target="RFC2119"></xref> <xref target="RFC8174"></xref>
+        when, and only when, they appear in all capitals, as shown here.
+      </t>
+    </section>
+
+    <section title="Update to RFC 3261">
+      <t>
+        This section updates the request-digest part of the SIP ABNF, by allowing more
+        than 32 characters.
+      </t>
+      <figure align="center"><artwork>
+<![CDATA[
+
+      OLD SYNTAX:
+
+        request-digest    =  LDQUOT 32LHEX RDQUOT
+
+
+      NEW SYNTAX:
+
+        request-digest    =  LDQUOT 32*LHEX RDQUOT
+
+]]></artwork></figure>
+    </section>
+
+    <section anchor="sec-security" title="Security Considerations" toc="default">
+      <t>
+        This document improves security for SIP, as the syntax allow conveying of digest
+        values calculated using modern crypto algorithms in the Authorization header field.
+      </t>
+    </section>
+
+    <section anchor="section.iana" title="IANA considerations">
+      <t>
+        [RFC EDITOR NOTE: Please replace all instances of RFCXXXX with the RFC number of this document.]
+      </t>
+      <t>
+        This section requests IANA to change the 'response' Parameter Name to 'dresponse' in the
+        row indexed by the 'Authorization' Header Field column value in
+        the "Header Field Parameters and Parameter Values" sub-registry <xref target="RFC3968"/>
+        under the sip-parameters registry: http://www.iana.org/assignments/sip-parameters.
+      </t>
+      <t>
+        This section requests IANA to add a RFCXXXX to the Reference column in the row indexed by
+        'Authorization' Header Field and dresponse 'Parameter Name' column values in
+        the "Header Field Parameters and Parameter Values" sub-registry <xref target="RFC3968"/>
+        under the sip-parameters registry: http://www.iana.org/assignments/sip-parameters.
+      </t>
+    </section>
+
+    <section anchor="sec-acks" title="Acknowledgements" toc="default">
+      <t>
+      </t>
+    </section>
+  </middle>
+  <back>
+    <references title="Normative References">
+      <?rfc include="reference.RFC.2119"?>
+      <?rfc include="reference.RFC.3261"?>
+      <?rfc include="reference.RFC.3968"?>
+    </references>
+  </back>
+</rfc>
